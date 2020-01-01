@@ -2,24 +2,22 @@ package infinitemonkey;
 
 //JavaFX Imports
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.PrintStream;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
-import infinitemonkey.CstmOutStrm.*;
-import infinitemonkey.DNA_Pool;
-
 public class Main{
-	static JButton submitBtn;
-	static JTextField strField;
+
 	static DNA_Pool dna_pool;
 
 	public static void main(String[] args) {
 		JFrame startFrame = new JFrame();
+
+		// String Entry
+		JButton submitBtn = new JButton("Submit");
+		JTextField strField = new JTextField();
+
 		// Menu Bar
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
@@ -38,7 +36,6 @@ public class Main{
 		JTextArea details = new JTextArea(1000, 10);
 		PrintStream ps = new PrintStream(new CstmOutStrm(details));
 		System.setOut(ps);
-		//System.setErr(ps);
 
 		details.setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
 
@@ -49,16 +46,11 @@ public class Main{
 		topLayout.add(scrollPane, BorderLayout.CENTER);
 
 		// Text field and submit button for entering strings
-		strField = new JTextField();
-		strField.setPreferredSize(new Dimension(300, 20));
+		strField.setPreferredSize(new Dimension(500, 20));
 
-		submitBtn = new JButton("Submit");
-		submitBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent actionEvent) {
-				dna_pool = new DNA_Pool(100, strField.getText());
-				dna_pool.loopUntilTargetMet();
-			}
+		submitBtn.addActionListener(e -> {
+			dna_pool = new DNA_Pool(100, strField.getText());
+			dna_pool.loopUntilTargetMet();
 		});
 
 		bottomLayout.add(strField, BorderLayout.WEST);
@@ -66,7 +58,7 @@ public class Main{
 
 		// Initialising main frame
 		startFrame.setTitle("Infinite Monkeys");
-		startFrame.setSize(500, 700);
+		startFrame.setSize(800, 700);
 		startFrame.setResizable(false);
 		startFrame.setLayout(new BorderLayout());
 		startFrame.setDefaultCloseOperation(startFrame.EXIT_ON_CLOSE);

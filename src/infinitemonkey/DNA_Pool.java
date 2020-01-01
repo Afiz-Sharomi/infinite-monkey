@@ -1,15 +1,14 @@
 package infinitemonkey;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import infinitemonkey.DNA;
 
 public class DNA_Pool {
 	private String target;
 	private int generation;
 	private int size;
-	private List<DNA[]> poolList = new ArrayList<DNA[]>();
+	private List<DNA[]> poolList = new ArrayList<>();
 	static char[] characters = {' ', 'a','b','c','d','e','f','g','h','i','j',
 			'k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 	private boolean atLeastOneFit;
@@ -28,12 +27,12 @@ public class DNA_Pool {
 		
 		for(int i=0; i<this.size; i++)
 		{
-			String genes = "";
+			StringBuilder genes = new StringBuilder();
 			for(int j=0; j<this.target.length(); j++)
 			{
-				genes += DNA_Pool.characters[(int)(Math.random() * DNA_Pool.characters.length)];
+				genes.append(DNA_Pool.characters[(int) (Math.random() * DNA_Pool.characters.length)]);
 			}
-			DNA newDNA = new DNA(genes);
+			DNA newDNA = new DNA(genes.toString());
 			newDNA.initFitness(this.target);
 			this.poolList.get(0)[i] = newDNA;
 		}
@@ -48,9 +47,9 @@ public class DNA_Pool {
 			this.printGen();
 			for(int i=0; i<this.size; i++)
 			{
-				if(this.getPoolList().get(0)[i].getFitness() == this.target.length())
-				{
+				if (this.getPoolList().get(0)[i].getFitness() == this.target.length()) {
 					this.targetMet = true;
+					break;
 				}
 			}
 			this.newGeneration();
@@ -68,7 +67,7 @@ public class DNA_Pool {
 		}
 		String dividerAsString = String.valueOf(divider);
 		System.out.println("\n" + dividerAsString);
-		System.out.printf("GENERATION %d\n\n", this.generation);
+		System.out.printf("GENERATION %d\n\n", (this.generation+1));
 		System.out.printf("Average Fitness: %f\n", this.averageFitness);
 		System.out.println(dividerAsString + "\n");
 		for(int i=0; i<this.size; i++)
@@ -91,16 +90,6 @@ public class DNA_Pool {
 				System.out.println(currentDNA);
 			}
 			
-		}
-	}
-	
-	// Print Specified Generation
-	public void printGen(int gen)
-	{
-		System.out.printf("GENERATION %d\n\n", gen);
-		for(int i=0; i<this.size; i++)
-		{
-			System.out.println(this.poolList.get(gen)[i]);
 		}
 	}
 	
@@ -129,7 +118,7 @@ public class DNA_Pool {
 	// Mating Pool Population that's Proportional to DNA Fitness
 	private List<DNA> genMatingPool()
 	{
-		List<DNA> matingPool = new ArrayList<DNA>();
+		List<DNA> matingPool = new ArrayList<>();
 		if(this.atLeastOneFit)
 		{
 			for(int i=0; i<this.size; i++)
@@ -144,10 +133,7 @@ public class DNA_Pool {
 		}
 		else
 		{
-			for(int i=0; i<this.size; i++)
-			{
-				matingPool.add(this.poolList.get(0)[i]);
-			}
+			matingPool.addAll(Arrays.asList(this.poolList.get(0)).subList(0, this.size));
 		}
 		return matingPool;
 	}
@@ -171,7 +157,7 @@ public class DNA_Pool {
 		{
 			this.atLeastOneFit = true;
 		}
-		this.averageFitness = (totalFitness/this.size);
+		this.averageFitness = (float)(totalFitness/this.size);
 	}
 	
 	// Getters and Setters
@@ -179,10 +165,5 @@ public class DNA_Pool {
 	public List<DNA[]> getPoolList()
 	{
 		return this.poolList;
-	}
-	
-	public void setPoolList(List<DNA[]> poolList)
-	{
-		this.poolList = poolList;
 	}
 }

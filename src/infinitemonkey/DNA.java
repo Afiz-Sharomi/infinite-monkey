@@ -1,5 +1,4 @@
 package infinitemonkey;
-import infinitemonkey.DNA_Pool;
 
 public class DNA {
 	
@@ -47,9 +46,8 @@ public class DNA {
 	private void mutate()
 	{
 		int index = (int)(Math.random() * this.genes.length());
-		char[] geneArray = this.genes.toCharArray();
-		geneArray[index] = DNA_Pool.characters[(int)(Math.random() * 26)];
-		this.genes = String.valueOf(geneArray);
+		char newGene = DNA_Pool.characters[(int) (Math.random() * 26)];
+		this.genes = this.genes.substring(0, index) + newGene + this.genes.substring(index);
 	}
 	
 	public String toString()
@@ -58,32 +56,14 @@ public class DNA {
 	}
 	
 	// Getters and Setters
-	
-	public String getGenes()
-	{
-		return this.genes;
-	}
-	
 	public int getFitness()
 	{
 		return this.fitness;
 	}
-	
 	public float getNormalisedFitness()
 	{
 		return this.normalisedFitness;
 	}
-	
-	public void setGenes(String genes)
-	{
-		this.genes = genes;
-	}
-	
-	public void setFitness(int fitness)
-	{
-		this.fitness = fitness;
-	}
-	
 	public void setNormalisedFitness(float normalisedFitness)
 	{
 		this.normalisedFitness = normalisedFitness;
