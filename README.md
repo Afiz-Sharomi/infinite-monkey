@@ -4,13 +4,12 @@
 This theorem can be simulated with computers and through genetic algorithms a final state can be realised with much greater speed.
 
 **Features**
-Currently the program is able to:
 - [x] Allow user to input a string.
 - [x] Read text from file.
 - [x] Print generations of strings and fitness to the console.
 - [x] Generate desired text via crossover and mutation.
 - [x] Halt once the desired text has been created.
-- [x] Provide a GUI interface.
+- [x] GUI interface.
 
 **Improvements to be Made**
 - [ ] Use JTable instead of JTexArea.
